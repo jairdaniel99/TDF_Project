@@ -7,16 +7,24 @@
   {{ survey.value | json }}
   <div class="form-group py-2">
     <!-- We can register FormControls into the FormGroup Object using ngModel and name attributes -->
+    <!-- We can access ngModel FormControl properties by assigning ngModel to emailRef -->
     <input
+      #emailRef="ngModel"
       class="form-control"
       type="text"
       name="E-mail"
       placeholder="E-mail"
       [(ngModel)]="email"
+      maxlength="15"
+      required
     />
+    <div *ngIf="emailRef.invalid && emailRef.touched" class="text-danger">
+      Email is required.
+    </div>
   </div>
   <div class="form-group py-2">
     <input
+      #passwordRef
       class="form-control"
       type="password"
       name="password"
@@ -25,19 +33,37 @@
     />
   </div>
   <div class="form-group py-2">
-    <select class="form-control" name="gender" id="gender" [(ngModel)]="gender">
+    <select
+      #genderRef
+      class="form-control"
+      name="gender"
+      id="gender"
+      [(ngModel)]="gender"
+    >
       <option value="male">Male</option>
       <option value="female">Female</option>
     </select>
   </div>
   <div class="form-group py-2">
     <input
+      #ageRef="ngModel"
       class="form-control"
       type="number"
       name="age"
       placeholder="age"
       [(ngModel)]="age"
+      required
+      min="18"
+      max="120"
     />
+    <div *ngIf="emailRef.touched">
+      <div *ngIf="ageRef.errors" class="text-danger">
+        {{ ageRef.errors | json }}
+        <div *ngIf="ageRef.errors['required']">Age is required.</div>
+        <div *ngIf="ageRef.errors['min']">Age must be at least 18.</div>
+        <div *ngIf="ageRef.errors['max']">Age must be at most 120.</div>
+      </div>
+    </div>
   </div>
   <button class="btn btn-success">Submit</button>
 </form>
