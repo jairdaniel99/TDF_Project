@@ -1,39 +1,42 @@
-<form #survey="ngForm" class="d-flex flex-column justify-content-around">
-  {{ survey["value"] | json }}
+<!-- We can use ngFprm to create a FormGroup Object that tracks the value and validity state from the form -->
+<form
+  #survey="ngForm"
+  class="d-flex flex-column justify-content-around"
+  (ngSubmit)="onSubmit(survey)"
+>
+  {{ survey.value | json }}
   <div class="form-group py-2">
+    <!-- We can register FormControls into the FormGroup Object using ngModel and name attributes -->
     <input
-      #email
       class="form-control"
       type="text"
       name="E-mail"
       placeholder="E-mail"
-      ngModel
+      [(ngModel)]="email"
     />
   </div>
   <div class="form-group py-2">
     <input
-      #password
       class="form-control"
       type="password"
       name="password"
       placeholder="password"
-      ngModel
+      [(ngModel)]="password"
     />
   </div>
   <div class="form-group py-2">
-    <select #gender class="form-control" name="gender" id="gender" ngModel>
+    <select class="form-control" name="gender" id="gender" [(ngModel)]="gender">
       <option value="male">Male</option>
       <option value="female">Female</option>
     </select>
   </div>
   <div class="form-group py-2">
     <input
-      #age
       class="form-control"
       type="number"
       name="age"
       placeholder="age"
-      ngModel
+      [(ngModel)]="age"
     />
   </div>
   <button class="btn btn-success">Submit</button>
