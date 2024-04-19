@@ -24,25 +24,42 @@
   </div>
   <div class="form-group py-2">
     <input
-      #passwordRef
+      #passwordRef="ngModel"
       class="form-control"
       type="password"
       name="password"
       placeholder="password"
       [(ngModel)]="password"
+      required
+      minlength="6"
     />
+    <div *ngIf="passwordRef.invalid && passwordRef.touched" class="text-danger">
+      <div *ngIf="passwordRef.errors">
+        <div *ngIf="passwordRef.errors['required']">Password is required.</div>
+        <div *ngIf="passwordRef.errors['minlength']">
+          Password must be at least 6 characters
+        </div>
+      </div>
+    </div>
   </div>
   <div class="form-group py-2">
     <select
-      #genderRef
+      #genderRef="ngModel"
       class="form-control"
       name="gender"
       id="gender"
       [(ngModel)]="gender"
+      required
     >
+      <option value=""></option>
       <option value="male">Male</option>
       <option value="female">Female</option>
     </select>
+    <div *ngIf="genderRef.invalid && genderRef.touched" class="text-danger">
+      <div *ngIf="genderRef.errors">
+        <div *ngIf="genderRef.errors['required']">Gender is required.</div>
+      </div>
+    </div>
   </div>
   <div class="form-group py-2">
     <input
@@ -56,9 +73,8 @@
       min="18"
       max="120"
     />
-    <div *ngIf="emailRef.touched">
+    <div *ngIf="ageRef.touched">
       <div *ngIf="ageRef.errors" class="text-danger">
-        {{ ageRef.errors | json }}
         <div *ngIf="ageRef.errors['required']">Age is required.</div>
         <div *ngIf="ageRef.errors['min']">Age must be at least 18.</div>
         <div *ngIf="ageRef.errors['max']">Age must be at most 120.</div>
